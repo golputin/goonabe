@@ -8,38 +8,35 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: '#050505',
-        panel: '#0a0a0a',
-        terminal: {
-          green: '#00ff88',
-          amber: '#ffb800',
-          red: '#ff3b3b',
-          dim: '#00cc6a',
-          muted: '#1a3d2a',
+        background: '#0a0a0b',
+        surface: '#111113',
+        card: '#16161a',
+        border: '#27272a',
+        primary: {
+          DEFAULT: '#6366f1',
+          hover: '#5558e6',
+          light: '#818cf8',
         },
-        accent: '#00ff88',
+        success: '#22c55e',
+        danger: '#ef4444',
+        warning: '#f59e0b',
+        muted: '#71717a',
       },
       fontFamily: {
-        mono: ['"JetBrains Mono"', '"Fira Code"', 'ui-monospace', 'monospace'],
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'system-ui', 'sans-serif'],
       },
       animation: {
-        'ticker': 'ticker 30s linear infinite',
-        'blink': 'blink 1s step-end infinite',
-        'pulse-slow': 'pulse 3s ease-in-out infinite',
-        'scan': 'scan 8s linear infinite',
+        'fade-in': 'fadeIn 0.3s ease-out',
+        'slide-up': 'slideUp 0.3s ease-out',
       },
       keyframes: {
-        ticker: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         },
-        blink: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0' },
-        },
-        scan: {
-          '0%': { transform: 'translateY(-100%)' },
-          '100%': { transform: 'translateY(100vh)' },
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
     },

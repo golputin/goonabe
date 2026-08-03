@@ -1,42 +1,57 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-terminal-muted px-6 py-10 bg-panel">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+    <footer className="border-t border-border bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-6 h-6 rounded bg-terminal-green flex items-center justify-center">
-                <span className="text-ink font-bold text-xs">K</span>
+          <div className="md:col-span-2">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center">
+                <span className="text-white font-bold text-sm">K</span>
               </div>
-              <span className="text-terminal-green font-bold tracking-wider text-sm">KLANKO</span>
+              <span className="font-bold text-lg">KLANKO</span>
             </div>
-            <p className="text-neutral-600 text-xs">
-              The Robinhood Chain Terminal · Experimental Software · NFA
+            <p className="text-sm text-muted max-w-sm">
+              Prediction markets for token launches on Robinhood Chain. 
+              Bet on outcomes, on-chain resolution, instant payouts.
             </p>
           </div>
 
           {/* Links */}
-          <div className="flex items-center gap-6 text-xs">
-            <a href="https://x.com/klankofun" target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-terminal-green transition uppercase tracking-wider">
-              X / Twitter
-            </a>
-            <a href="https://github.com/golputin/goonabe" target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-terminal-green transition uppercase tracking-wider">
-              GitHub
-            </a>
-            <a href="#" className="text-neutral-500 hover:text-terminal-green transition uppercase tracking-wider">
-              Docs
-            </a>
+          <div>
+            <h4 className="text-sm font-semibold text-white mb-4">Platform</h4>
+            <ul className="space-y-2">
+              <li><a href="#markets" className="text-sm text-muted hover:text-white transition-smooth">Markets</a></li>
+              <li><a href="#leaderboard" className="text-sm text-muted hover:text-white transition-smooth">Leaderboard</a></li>
+              <li><a href="#how" className="text-sm text-muted hover:text-white transition-smooth">How It Works</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-sm font-semibold text-white mb-4">Community</h4>
+            <ul className="space-y-2">
+              <li>
+                <a href="https://x.com/klankofun" target="_blank" rel="noopener noreferrer" className="text-sm text-muted hover:text-white transition-smooth">
+                  X / Twitter
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/golputin/goonabe" target="_blank" rel="noopener noreferrer" className="text-sm text-muted hover:text-white transition-smooth">
+                  GitHub
+                </a>
+              </li>
+              <li><a href="#" className="text-sm text-muted hover:text-white transition-smooth">Docs</a></li>
+            </ul>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-8 pt-6 border-t border-terminal-muted/50 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-neutral-700 text-[10px] uppercase tracking-wider">
+        <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="text-xs text-zinc-600">
             © {new Date().getFullYear()} Klanko · Robinhood Chain
           </div>
-          <div className="text-neutral-700 text-[10px]">
-            Not financial advice. DYOR.
+          <div className="text-xs text-zinc-600">
+            Not financial advice. Trade responsibly.
           </div>
         </div>
       </div>

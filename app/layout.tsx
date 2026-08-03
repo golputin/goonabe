@@ -1,30 +1,30 @@
 import type { Metadata } from 'next';
-import { JetBrains_Mono } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import './globals.css';
 
-const jetbrainsMono = JetBrains_Mono({
+const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-mono',
+  variable: '--font-sans',
 });
 
 export const metadata: Metadata = {
-  title: 'KLANKO — The Robinhood Chain Terminal',
+  title: 'KLANKO — Prediction Markets for Crypto Launches',
   description:
-    'DeFi suite on Robinhood Chain. Token launchpad, Broker NFT desk, exchange, and options. Clock in. Trade out.',
+    'Bet on token launch outcomes. Markets for graduation, market cap, dev behavior, and more. On-chain resolution, instant payouts.',
   metadataBase: new URL('https://klanko.fun'),
   openGraph: {
-    title: 'KLANKO — The Robinhood Chain Terminal',
+    title: 'KLANKO — Prediction Markets for Crypto Launches',
     description:
-      'DeFi suite on Robinhood Chain. Token launchpad, Broker NFT desk, exchange, and options.',
+      'Bet on token launch outcomes. Markets for graduation, market cap, dev behavior, and more.',
     url: 'https://klanko.fun',
     siteName: 'KLANKO',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'KLANKO — The Robinhood Chain Terminal',
+    title: 'KLANKO — Prediction Markets',
     description:
-      'DeFi suite on Robinhood Chain. Token launchpad, Broker NFT desk, exchange, and options.',
+      'Bet on token launch outcomes. On-chain resolution, instant payouts.',
     site: '@klankofun',
   },
   robots: {
@@ -39,8 +39,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={jetbrainsMono.variable}>
-      <body className="scanlines">{children}</body>
+    <html lang="en" className={inter.variable}>
+      <body>{children}</body>
     </html>
   );
 }
