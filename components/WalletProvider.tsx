@@ -7,9 +7,12 @@ interface WalletContextType {
   isConnected: boolean;
   isConnecting: boolean;
   chainId: string | null;
+  balance: string;
+  balanceWei: bigint;
   connect: () => Promise<void>;
   disconnect: () => void;
   shortAddress: string;
+  refreshBalance: () => Promise<void>;
 }
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
@@ -33,6 +36,8 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const [address, setAddress] = useState<string | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
   const [chainId, setChainId] = useState<string | null>(null);
+  const [balance, setBalance] = useState('0');
+  const [balanceWei, setBalanceWei] = useState<bigint>(BigInt(0));
 
   // Check if already connected on mount
   useEffect(() => {
@@ -53,9 +58,35 @@ export function WalletProvider({ children }: { children: ReactNode }) {
           method: 'eth_chainId',
         })) as string;
         setChainId(currentChainId);
+        await fetchBalance(accounts[0]);
       }
     } catch (error) {
       console.error('Error checking connection:', error);
+    }
+  };
+
+  const fetchBalance = async (addr: string) => {
+    if (typeof window === 'undefined' || !window.ethereum) return;
+
+    try {
+      const balanceHex = (await window.ethereum.request({
+        method: 'eth_getBalance',
+        params: [addr, 'latest'],
+      })) as string;
+
+      const wei = BigInt(balanceHex);
+      setBalanceWei(wei);
+      // Convert to ETH (18 decimals)
+      const eth = Number(wei) / 1e18;
+      setBalance(eth.toFixed(4));
+    } catch (error) {
+      console.error('Error fetching balance:', error);
+    }
+  };
+
+  const refreshBalance = async () => {
+    if (address) {
+      await fetchBalance(address);
     }
   };
 
@@ -85,6 +116,9 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         })) as string;
         setChainId(currentChainId);
 
+        // Fetch balance
+        await fetchBalance(accounts[0]);
+
         // Try to switch to Robinhood Chain if not on it
         // Uncomment and update when chain ID is known
         /*
@@ -95,7 +129,6 @@ export function WalletProvider({ children }: { children: ReactNode }) {
               params: [{ chainId: ROBINHOOD_CHAIN_ID }],
             });
           } catch (switchError: unknown) {
-            // Chain not added, try to add it
             const error = switchError as { code?: number };
             if (error.code === 4902) {
               await window.ethereum.request({
@@ -104,8 +137,8 @@ export function WalletProvider({ children }: { children: ReactNode }) {
                   chainId: ROBINHOOD_CHAIN_ID,
                   chainName: ROBINHOOD_CHAIN_NAME,
                   nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
-                  rpcUrls: ['https://rpc.robinhoodchain.com'], // Update with real RPC
-                  blockExplorerUrls: ['https://explorer.robinhoodchain.com'], // Update
+                  rpcUrls: ['https://rpc.robinhoodchain.com'],
+                  blockExplorerUrls: ['https://explorer.robinhoodchain.com'],
                 }],
               });
             }
@@ -116,7 +149,6 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     } catch (error: unknown) {
       const err = error as { code?: number; message?: string };
       if (err.code === 4001) {
-        // User rejected
         console.log('User rejected connection');
       } else {
         console.error('Error connecting:', error);
@@ -129,6 +161,8 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const disconnect = () => {
     setAddress(null);
     setChainId(null);
+    setBalance('0');
+    setBalanceWei(BigInt(0));
   };
 
   // Listen for account changes
@@ -141,6 +175,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         disconnect();
       } else {
         setAddress(accounts[0]);
+        fetchBalance(accounts[0]);
       }
     };
 
@@ -169,9 +204,12 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         isConnected: !!address,
         isConnecting,
         chainId,
+        balance,
+        balanceWei,
         connect,
         disconnect,
         shortAddress,
+        refreshBalance,
       }}
     >
       {children}

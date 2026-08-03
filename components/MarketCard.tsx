@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useWallet } from './WalletProvider';
 
 export interface Market {
   id: number;
@@ -24,12 +25,55 @@ const CATEGORY_COLORS: Record<string, string> = {
   'Rug Risk': 'bg-orange-500/10 text-orange-400 border-orange-500/20',
 };
 
+const PERCENTAGE_OPTIONS = [
+  { label: '20%', value: 0.2 },
+  { label: '50%', value: 0.5 },
+  { label: '100%', value: 1.0 },
+];
+
 export default function MarketCard({ market }: { market: Market }) {
+  const { isConnected, balance, balanceWei, connect } = useWallet();
   const [selected, setSelected] = useState<'YES' | 'NO' | null>(null);
   const [amount, setAmount] = useState('');
+  const [betPlaced, setBetPlaced] = useState(false);
 
   const isResolved = market.status === 'RESOLVED';
   const noPercent = 100 - market.yesPercent;
+
+  const handlePercentageClick = (percent: number) => {
+    if (!isConnected) return;
+    const balanceNum = parseFloat(balance) || 0;
+    const amountValue = (balanceNum * percent).toFixed(4);
+    setAmount(amountValue);
+  };
+
+  const handleBet = () => {
+    if (!isConnected) {
+      connect();
+      return;
+    }
+
+    const amountNum = parseFloat(amount);
+    if (!amountNum || amountNum <= 0) {
+      alert('Please enter a valid amount');
+      return;
+    }
+
+    const balanceNum = parseFloat(balance) || 0;
+    if (amountNum > balanceNum) {
+      alert('Insufficient balance');
+      return;
+    }
+
+    // TODO: Implement actual bet transaction
+    // For now, just show success state
+    setBetPlaced(true);
+    setTimeout(() => {
+      setBetPlaced(false);
+      setSelected(null);
+      setAmount('');
+    }, 2000);
+  };
 
   return (
     <div className="card-hover bg-card border border-border rounded-xl p-5">
@@ -47,7 +91,7 @@ export default function MarketCard({ market }: { market: Market }) {
             </span>
           </div>
         </div>
-        
+
         {/* Status */}
         {isResolved ? (
           <span className={`px-2 py-1 rounded text-[10px] font-medium ${
@@ -88,7 +132,7 @@ export default function MarketCard({ market }: { market: Market }) {
 
       {/* Stats */}
       <div className="flex items-center justify-between text-xs text-muted mb-4">
-        <span>{market.volume} ETH vol</span>
+        <span>${market.volume.toLocaleString()} vol</span>
         <span>{market.traders} traders</span>
         <span>{market.endsIn}</span>
       </div>
@@ -96,6 +140,15 @@ export default function MarketCard({ market }: { market: Market }) {
       {/* Betting UI */}
       {!isResolved ? (
         <div className="space-y-3">
+          {/* Balance display */}
+          {isConnected && (
+            <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-zinc-900/50 border border-border">
+              <span className="text-xs text-muted">Your balance</span>
+              <span className="text-xs text-white font-mono">{balance} ETH</span>
+            </div>
+          )}
+
+          {/* YES/NO buttons */}
           <div className="grid grid-cols-2 gap-2">
             <button
               onClick={() => setSelected('YES')}
@@ -119,21 +172,59 @@ export default function MarketCard({ market }: { market: Market }) {
             </button>
           </div>
 
+          {/* Amount input with percentage buttons */}
           {selected && (
-            <div className="flex gap-2 animate-fade-in">
-              <div className="flex-1 relative">
-                <input
-                  type="number"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  placeholder="0.0"
-                  className="w-full px-3 py-2 pr-12 rounded-lg bg-zinc-900 border border-border text-white text-sm focus:outline-none focus:border-primary"
-                />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted">ETH</span>
+            <div className="space-y-2 animate-fade-in">
+              {/* Percentage buttons */}
+              {isConnected && (
+                <div className="grid grid-cols-3 gap-2">
+                  {PERCENTAGE_OPTIONS.map((opt) => (
+                    <button
+                      key={opt.label}
+                      onClick={() => handlePercentageClick(opt.value)}
+                      className="py-1.5 rounded-lg text-xs font-medium bg-zinc-800 hover:bg-zinc-700 text-muted hover:text-white transition-smooth"
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Amount input */}
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <input
+                    type="number"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    placeholder={isConnected ? `Max: ${balance}` : 'Connect wallet'}
+                    disabled={!isConnected}
+                    className="w-full px-3 py-2.5 rounded-lg bg-zinc-900 border border-border text-white text-sm focus:outline-none focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                  />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted">ETH</span>
+                </div>
+                <button
+                  onClick={handleBet}
+                  disabled={!isConnected || !amount || betPlaced}
+                  className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-smooth disabled:opacity-50 disabled:cursor-not-allowed ${
+                    betPlaced
+                      ? 'bg-success text-white'
+                      : 'bg-primary hover:bg-primary-hover text-white'
+                  }`}
+                >
+                  {betPlaced ? '✓ Bet Placed' : isConnected ? 'Confirm' : 'Connect'}
+                </button>
               </div>
-              <button className="px-4 py-2 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-medium transition-smooth">
-                Bet
-              </button>
+
+              {/* Connect wallet prompt */}
+              {!isConnected && (
+                <button
+                  onClick={connect}
+                  className="w-full py-2 rounded-lg border border-primary/50 text-primary text-xs font-medium hover:bg-primary/10 transition-smooth"
+                >
+                  Connect wallet to bet
+                </button>
+              )}
             </div>
           )}
         </div>
