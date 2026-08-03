@@ -3,6 +3,7 @@
 const NAV_ITEMS = [
   { label: 'HOME', icon: '⌂', href: '#', active: true },
   { label: 'LAUNCHER', icon: '▲', href: '#launcher' },
+  { label: 'ORACLE', icon: '◎', href: '#oracle' },
   { label: 'BROKER DESK', icon: '◈', href: '#desk' },
   { label: 'EXCHANGE', icon: '⇄', href: '#exchange' },
   { label: 'OPTIONS', icon: '∿', href: '#options' },

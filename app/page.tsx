@@ -3,6 +3,7 @@ import DisclaimerModal from '@/components/DisclaimerModal';
 import Sidebar from '@/components/Sidebar';
 import Hero from '@/components/Hero';
 import ProductShowcase from '@/components/ProductShowcase';
+import OracleMarkets from '@/components/OracleMarkets';
 import BrokerNFT from '@/components/BrokerNFT';
 import Footer from '@/components/Footer';
 
@@ -16,6 +17,7 @@ export default function Page() {
         <main className="flex-1">
           <Hero />
           <ProductShowcase />
+          <OracleMarkets />
           <BrokerNFT />
         </main>
         <Footer />

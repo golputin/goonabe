@@ -11,6 +11,17 @@ const PRODUCTS = [
     features: ['Fixed Price', 'Bonding Curve', 'Auto LP', 'Fee Split'],
   },
   {
+    id: 'oracle',
+    name: 'KLANKO ORACLE',
+    tag: 'PREDICTION MARKETS',
+    icon: '◎',
+    description:
+      'Bet on launch outcomes. Markets auto-created for every token launch — graduation, market cap, dev behavior. Resolution is on-chain and automatic.',
+    status: 'LIVE',
+    statusColor: 'text-terminal-green',
+    features: ['Auto Markets', 'YES/NO Pools', 'On-chain Resolution', 'Instant Payout'],
+  },
+  {
     id: 'desk',
     name: 'BROKER DESK',
     tag: 'NFT FEE SHARING',
@@ -31,17 +42,6 @@ const PRODUCTS = [
     status: 'SOON',
     statusColor: 'text-terminal-amber',
     features: ['Aggregated Liquidity', 'Best Price', 'Low Slippage'],
-  },
-  {
-    id: 'options',
-    name: 'KLANKO OPTIONS',
-    tag: 'DERIVATIVES',
-    icon: '∿',
-    description:
-      'Trade options on launched tokens. Hedge your bags or speculate on volatility.',
-    status: 'SOON',
-    statusColor: 'text-terminal-amber',
-    features: ['Calls & Puts', 'Token Options', 'Volatility'],
   },
 ];
 
