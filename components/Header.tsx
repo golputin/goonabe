@@ -34,9 +34,6 @@ export default function Header() {
 
           {/* Right side */}
           <div className="flex items-center gap-3">
-            <button className="hidden sm:block px-4 py-2 text-sm text-muted hover:text-white transition-smooth">
-              Log In
-            </button>
             <button className="px-4 py-2 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-medium transition-smooth">
               Connect Wallet
             </button>

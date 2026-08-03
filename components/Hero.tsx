@@ -42,7 +42,7 @@ export default function Hero() {
           {/* Stats */}
           <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6">
             {[
-              { label: 'Total Volume', value: '$2.4M' },
+              { label: 'Total Volume', value: '127 ETH' },
               { label: 'Markets Created', value: '156' },
               { label: 'Active Traders', value: '3,847' },
               { label: 'Resolved', value: '142' },

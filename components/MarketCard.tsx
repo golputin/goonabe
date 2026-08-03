@@ -88,7 +88,7 @@ export default function MarketCard({ market }: { market: Market }) {
 
       {/* Stats */}
       <div className="flex items-center justify-between text-xs text-muted mb-4">
-        <span>${market.volume.toLocaleString()} vol</span>
+        <span>{market.volume} ETH vol</span>
         <span>{market.traders} traders</span>
         <span>{market.endsIn}</span>
       </div>
@@ -121,15 +121,18 @@ export default function MarketCard({ market }: { market: Market }) {
 
           {selected && (
             <div className="flex gap-2 animate-fade-in">
-              <input
-                type="number"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                placeholder="Amount"
-                className="flex-1 px-3 py-2 rounded-lg bg-zinc-900 border border-border text-white text-sm focus:outline-none focus:border-primary"
-              />
+              <div className="flex-1 relative">
+                <input
+                  type="number"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  placeholder="0.0"
+                  className="w-full px-3 py-2 pr-12 rounded-lg bg-zinc-900 border border-border text-white text-sm focus:outline-none focus:border-primary"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted">ETH</span>
+              </div>
               <button className="px-4 py-2 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-medium transition-smooth">
-                Confirm
+                Bet
               </button>
             </div>
           )}
