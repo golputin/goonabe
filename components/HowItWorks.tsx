@@ -2,7 +2,7 @@ const STEPS = [
   {
     step: '01',
     title: 'Token Launches',
-    description: 'When a token launches on the platform, prediction markets are automatically created for it.',
+    description: 'When a token launches on Robinhood Chain, prediction markets are automatically created for it.',
     icon: '🚀',
   },
   {
@@ -30,68 +30,81 @@ const MARKET_TYPES = [
     type: 'Graduation',
     description: 'Will the token graduate from the bonding curve?',
     resolution: 'On-chain: bonding curve completion',
-    color: 'text-green-400',
+    color: 'text-lime',
   },
   {
     type: 'Market Cap',
     description: 'Will the token hit a specific market cap?',
     resolution: 'Oracle: price feed at deadline',
-    color: 'text-blue-400',
+    color: 'text-lavender-light',
   },
   {
     type: 'Dev Behavior',
     description: 'Will the dev sell/dump within a timeframe?',
     resolution: 'On-chain: wallet transaction tracking',
-    color: 'text-red-400',
+    color: 'text-danger',
   },
   {
     type: 'Longevity',
     description: 'Will the token survive X days with volume?',
     resolution: 'On-chain: volume check at deadline',
-    color: 'text-purple-400',
+    color: 'text-lavender-light',
   },
   {
     type: 'Rug Risk',
     description: 'Will the token rug (liquidity removed)?',
     resolution: 'On-chain: liquidity pool monitoring',
-    color: 'text-orange-400',
+    color: 'text-orange',
   },
 ];
 
 export default function HowItWorks() {
   return (
-    <section id="how" className="bg-surface border-y border-border">
+    <section id="how" className="border-y border-line bg-paper/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
         {/* Section header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-white mb-4">How It Works</h2>
-          <p className="text-muted max-w-2xl mx-auto">
-            Prediction markets for token launches. Bet on outcomes, win based on real on-chain data.
+        <div className="mb-12">
+          <div className="kicker kicker--lime mb-3">PROTOCOL // HOW IT WORKS</div>
+          <h2 className="font-display font-bold text-3xl text-ink tracking-tight">
+            Bet on outcomes. Win on-chain.
+          </h2>
+          <p className="text-muted max-w-2xl mt-3">
+            Prediction markets for token launches. Every outcome is settled by
+            real on-chain data — no oracles of trust, no manual resolution.
           </p>
         </div>
 
         {/* Steps */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-14">
           {STEPS.map((step) => (
-            <div key={step.step} className="relative bg-card border border-border rounded-xl p-6">
+            <div
+              key={step.step}
+              className="card-hover rounded-panel border border-line bg-paper p-6"
+            >
               <div className="text-3xl mb-4">{step.icon}</div>
-              <div className="text-xs text-primary font-mono mb-2">{step.step}</div>
-              <h3 className="text-white font-semibold mb-2">{step.title}</h3>
-              <p className="text-sm text-muted">{step.description}</p>
+              <div className="font-mono text-[10px] font-bold tracking-[0.1em] text-lime mb-2">
+                STEP // {step.step}
+              </div>
+              <h3 className="font-display font-semibold text-ink mb-2">{step.title}</h3>
+              <p className="text-sm text-muted leading-relaxed">{step.description}</p>
             </div>
           ))}
         </div>
 
         {/* Market types */}
-        <div className="bg-card border border-border rounded-xl p-6 sm:p-8">
-          <h3 className="text-xl font-bold text-white mb-6">Market Types</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="rounded-card border border-line bg-paper overflow-hidden">
+          <div className="titlebar">
+            <span className="kicker kicker--lavender">MARKET TYPES // RESOLUTION SOURCES</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-line">
             {MARKET_TYPES.map((market) => (
-              <div key={market.type} className="p-4 rounded-lg bg-zinc-900/50 border border-border">
-                <div className={`font-semibold mb-1 ${market.color}`}>{market.type}</div>
-                <p className="text-sm text-muted mb-2">{market.description}</p>
-                <div className="text-xs text-zinc-500">
-                  <span className="text-zinc-400">Resolution:</span> {market.resolution}
+              <div key={market.type} className="p-5 bg-paper">
+                <div className={`font-display font-semibold mb-1.5 ${market.color}`}>
+                  {market.type}
+                </div>
+                <p className="text-sm text-muted mb-3 leading-relaxed">{market.description}</p>
+                <div className="font-mono text-[9px] uppercase tracking-[0.07em] text-muted">
+                  <span className="text-lavender">RESOLUTION:</span> {market.resolution}
                 </div>
               </div>
             ))}
@@ -100,10 +113,7 @@ export default function HowItWorks() {
 
         {/* CTA */}
         <div className="mt-12 text-center">
-          <a
-            href="#markets"
-            className="inline-block px-8 py-3 rounded-lg bg-primary hover:bg-primary-hover text-white font-medium transition-smooth"
-          >
+          <a href="#markets" className="btn btn--lime">
             Start Trading
           </a>
         </div>

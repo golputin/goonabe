@@ -17,12 +17,12 @@ export interface Market {
   image?: string;
 }
 
-const CATEGORY_COLORS: Record<string, string> = {
-  'Graduation': 'bg-green-500/10 text-green-400 border-green-500/20',
-  'Market Cap': 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-  'Dev Behavior': 'bg-red-500/10 text-red-400 border-red-500/20',
-  'Longevity': 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-  'Rug Risk': 'bg-orange-500/10 text-orange-400 border-orange-500/20',
+const CATEGORY_BADGE: Record<string, string> = {
+  'Graduation': 'badge--lime',
+  'Market Cap': 'badge--lavender',
+  'Dev Behavior': 'badge--danger',
+  'Longevity': '',
+  'Rug Risk': 'badge--danger',
 };
 
 const PERCENTAGE_OPTIONS = [
@@ -76,174 +76,182 @@ export default function MarketCard({ market }: { market: Market }) {
   };
 
   return (
-    <div className="card-hover bg-card border border-border rounded-xl p-5">
-      {/* Header */}
-      <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-2">
-          {/* Token avatar */}
-          {market.image ? (
-            // eslint-disable-next-line @next/next/no-img-element
+    <div className="card-hover rounded-card border border-line bg-paper overflow-hidden">
+      {/* Art zone */}
+      <div className="card-art">
+        {market.image && (
+          <>
+            <div className="card-art-echo" aria-hidden>
+              <img src={market.image} alt="" />
+            </div>
             <img
               src={market.image}
               alt={`$${market.token} logo`}
-              className="w-8 h-8 rounded-full object-cover"
+              className="card-art-photo"
             />
-          ) : (
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/30 to-purple-500/30 flex items-center justify-center text-xs font-bold text-white">
-              {market.token.slice(0, 2)}
-            </div>
-          )}
-          <div>
-            <div className="text-sm font-medium text-white">${market.token}</div>
-            <span className={`inline-block px-2 py-0.5 rounded text-[10px] border ${CATEGORY_COLORS[market.category] || 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20'}`}>
+          </>
+        )}
+        <span className="card-art-ticker">${market.token}</span>
+      </div>
+
+      {/* Body */}
+      <div className="p-5">
+        {/* Badges + status */}
+        <div className="flex items-center justify-between gap-2 mb-3">
+          <div className="flex items-center gap-2">
+            <span className={`badge ${CATEGORY_BADGE[market.category] || 'badge--lavender'}`}>
               {market.category}
             </span>
           </div>
+          {isResolved ? (
+            <span className={`badge ${market.result === 'YES' ? 'badge--lime' : 'badge--danger'}`}>
+              {market.result}
+            </span>
+          ) : (
+            <span className="badge badge--lime">
+              <span className="w-1 h-1 rounded-full bg-lime pulse-dot" />
+              LIVE
+            </span>
+          )}
         </div>
 
-        {/* Status */}
-        {isResolved ? (
-          <span className={`px-2 py-1 rounded text-[10px] font-medium ${
-            market.result === 'YES' ? 'bg-success/10 text-success' : 'bg-danger/10 text-danger'
-          }`}>
-            {market.result}
-          </span>
+        {/* Question */}
+        <h3 className="font-display font-semibold text-ink text-[15px] leading-snug mb-4 min-h-[42px]">
+          {market.question}
+        </h3>
+
+        {/* Probability bar */}
+        <div className="mb-4">
+          <div className="progress-label">
+            <span className="text-lime font-bold">{market.yesPercent}% YES</span>
+            <span className="text-danger font-bold">{noPercent}% NO</span>
+          </div>
+          <div className="h-1.5 rounded-full bg-canvas overflow-hidden flex">
+            <div
+              className="bg-lime animate-fill transition-all"
+              style={{ width: `${market.yesPercent}%` }}
+            />
+            <div
+              className="bg-danger animate-fill transition-all"
+              style={{ width: `${noPercent}%` }}
+            />
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.04em] text-muted mb-4">
+          <span>${market.volume.toLocaleString()} VOL</span>
+          <span>{market.traders} TRADERS</span>
+          <span>{market.endsIn.toUpperCase()}</span>
+        </div>
+
+        {/* Betting UI */}
+        {!isResolved ? (
+          <div className="space-y-3">
+            {/* Balance display */}
+            {isConnected && (
+              <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-canvas/60 border border-line">
+                <span className="font-mono text-[9px] uppercase tracking-[0.08em] text-muted">
+                  Your balance
+                </span>
+                <span className="text-xs text-ink font-mono">{balance} ETH</span>
+              </div>
+            )}
+
+            {/* YES/NO buttons */}
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                onClick={() => setSelected('YES')}
+                className={`py-2.5 rounded-xl font-mono text-xs font-bold uppercase tracking-[0.06em] transition-all ${
+                  selected === 'YES'
+                    ? 'bg-lime text-[#171815] shadow-[0_0_20px_rgba(189,255,69,0.3)]'
+                    : 'bg-lime/8 text-lime border border-lime/25 hover:bg-lime/15'
+                }`}
+              >
+                Buy YES
+              </button>
+              <button
+                onClick={() => setSelected('NO')}
+                className={`py-2.5 rounded-xl font-mono text-xs font-bold uppercase tracking-[0.06em] transition-all ${
+                  selected === 'NO'
+                    ? 'bg-danger text-white shadow-[0_0_20px_rgba(228,64,97,0.3)]'
+                    : 'bg-danger/8 text-danger border border-danger/25 hover:bg-danger/15'
+                }`}
+              >
+                Buy NO
+              </button>
+            </div>
+
+            {/* Amount input with percentage buttons */}
+            {selected && (
+              <div className="space-y-2 animate-fade-in">
+                {/* Percentage buttons */}
+                {isConnected && (
+                  <div className="grid grid-cols-3 gap-2">
+                    {PERCENTAGE_OPTIONS.map((opt) => (
+                      <button
+                        key={opt.label}
+                        onClick={() => handlePercentageClick(opt.value)}
+                        className="py-1.5 rounded-lg font-mono text-[10px] font-semibold bg-canvas border border-line text-muted hover:text-ink hover:border-line-strong transition-all"
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {/* Amount input */}
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <input
+                      type="number"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      placeholder={isConnected ? `Max: ${balance}` : 'Connect wallet'}
+                      disabled={!isConnected}
+                      className="w-full px-3 py-2.5 rounded-xl bg-canvas border border-line text-ink text-sm font-mono focus:outline-none focus:border-lavender disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-muted/60"
+                    />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 font-mono text-[10px] text-muted">
+                      ETH
+                    </span>
+                  </div>
+                  <button
+                    onClick={handleBet}
+                    disabled={!isConnected || !amount || betPlaced}
+                    className={`px-4 py-2.5 rounded-xl font-mono text-xs font-bold uppercase tracking-[0.06em] transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
+                      betPlaced
+                        ? 'bg-lime text-[#171815]'
+                        : 'bg-lavender hover:bg-lavender-light text-canvas'
+                    }`}
+                  >
+                    {betPlaced ? '✓ BET SET' : isConnected ? 'Confirm' : 'Connect'}
+                  </button>
+                </div>
+
+                {/* Connect wallet prompt */}
+                {!isConnected && (
+                  <button
+                    onClick={connect}
+                    className="w-full py-2 rounded-xl border border-lavender/40 text-lavender-light font-mono text-[10px] font-semibold uppercase tracking-[0.08em] hover:bg-lavender/10 transition-all"
+                  >
+                    Connect wallet to bet
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
         ) : (
-          <span className="flex items-center gap-1 text-[10px] text-success">
-            <span className="w-1.5 h-1.5 rounded-full bg-success pulse-dot" />
-            LIVE
-          </span>
+          <div
+            className={`py-2.5 rounded-xl text-center font-mono text-xs font-bold uppercase tracking-[0.06em] ${
+              market.result === 'YES'
+                ? 'bg-lime/10 text-lime border border-lime/25'
+                : 'bg-danger/10 text-danger border border-danger/25'
+            }`}
+          >
+            Resolved: {market.result}
+          </div>
         )}
       </div>
-
-      {/* Question */}
-      <h3 className="text-white font-medium text-sm mb-4 line-clamp-2">
-        {market.question}
-      </h3>
-
-      {/* Probability bar */}
-      <div className="mb-4">
-        <div className="flex justify-between text-xs mb-1.5">
-          <span className="text-success font-medium">{market.yesPercent}% YES</span>
-          <span className="text-danger font-medium">{noPercent}% NO</span>
-        </div>
-        <div className="h-2 rounded-full bg-zinc-800 overflow-hidden flex">
-          <div
-            className="bg-success animate-fill transition-all"
-            style={{ width: `${market.yesPercent}%` }}
-          />
-          <div
-            className="bg-danger animate-fill transition-all"
-            style={{ width: `${noPercent}%` }}
-          />
-        </div>
-      </div>
-
-      {/* Stats */}
-      <div className="flex items-center justify-between text-xs text-muted mb-4">
-        <span>${market.volume.toLocaleString()} vol</span>
-        <span>{market.traders} traders</span>
-        <span>{market.endsIn}</span>
-      </div>
-
-      {/* Betting UI */}
-      {!isResolved ? (
-        <div className="space-y-3">
-          {/* Balance display */}
-          {isConnected && (
-            <div className="flex items-center justify-between px-3 py-2 rounded-lg bg-zinc-900/50 border border-border">
-              <span className="text-xs text-muted">Your balance</span>
-              <span className="text-xs text-white font-mono">{balance} ETH</span>
-            </div>
-          )}
-
-          {/* YES/NO buttons */}
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              onClick={() => setSelected('YES')}
-              className={`py-2.5 rounded-lg text-sm font-medium transition-smooth ${
-                selected === 'YES'
-                  ? 'bg-success text-white'
-                  : 'bg-success/10 text-success hover:bg-success/20'
-              }`}
-            >
-              Buy YES
-            </button>
-            <button
-              onClick={() => setSelected('NO')}
-              className={`py-2.5 rounded-lg text-sm font-medium transition-smooth ${
-                selected === 'NO'
-                  ? 'bg-danger text-white'
-                  : 'bg-danger/10 text-danger hover:bg-danger/20'
-              }`}
-            >
-              Buy NO
-            </button>
-          </div>
-
-          {/* Amount input with percentage buttons */}
-          {selected && (
-            <div className="space-y-2 animate-fade-in">
-              {/* Percentage buttons */}
-              {isConnected && (
-                <div className="grid grid-cols-3 gap-2">
-                  {PERCENTAGE_OPTIONS.map((opt) => (
-                    <button
-                      key={opt.label}
-                      onClick={() => handlePercentageClick(opt.value)}
-                      className="py-1.5 rounded-lg text-xs font-medium bg-zinc-800 hover:bg-zinc-700 text-muted hover:text-white transition-smooth"
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {/* Amount input */}
-              <div className="flex gap-2">
-                <div className="relative flex-1">
-                  <input
-                    type="number"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    placeholder={isConnected ? `Max: ${balance}` : 'Connect wallet'}
-                    disabled={!isConnected}
-                    className="w-full px-3 py-2.5 rounded-lg bg-zinc-900 border border-border text-white text-sm focus:outline-none focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
-                  />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted">ETH</span>
-                </div>
-                <button
-                  onClick={handleBet}
-                  disabled={!isConnected || !amount || betPlaced}
-                  className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-smooth disabled:opacity-50 disabled:cursor-not-allowed ${
-                    betPlaced
-                      ? 'bg-success text-white'
-                      : 'bg-primary hover:bg-primary-hover text-white'
-                  }`}
-                >
-                  {betPlaced ? '✓ Bet Placed' : isConnected ? 'Confirm' : 'Connect'}
-                </button>
-              </div>
-
-              {/* Connect wallet prompt */}
-              {!isConnected && (
-                <button
-                  onClick={connect}
-                  className="w-full py-2 rounded-lg border border-primary/50 text-primary text-xs font-medium hover:bg-primary/10 transition-smooth"
-                >
-                  Connect wallet to bet
-                </button>
-              )}
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className={`py-2.5 rounded-lg text-center text-sm font-medium ${
-          market.result === 'YES' ? 'bg-success/10 text-success' : 'bg-danger/10 text-danger'
-        }`}>
-          Resolved: {market.result}
-        </div>
-      )}
     </div>
   );
 }

@@ -130,13 +130,16 @@ export default function MarketGrid() {
   });
 
   return (
-    <section id="markets" className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <section id="markets" className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
       {/* Section header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div>
-          <h2 className="text-2xl font-bold text-white">Markets</h2>
-          <p className="text-sm text-muted mt-1">
-            {filteredMarkets.length} markets · Auto-created for every launch
+          <div className="kicker kicker--lime mb-3">MARKETS // AUTO-CREATED FOR EVERY LAUNCH</div>
+          <h2 className="font-display font-bold text-3xl text-ink tracking-tight">
+            Open Markets
+          </h2>
+          <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-muted mt-2">
+            {filteredMarkets.length} markets live
           </p>
         </div>
 
@@ -146,9 +149,11 @@ export default function MarketGrid() {
             type="checkbox"
             checked={showResolved}
             onChange={(e) => setShowResolved(e.target.checked)}
-            className="w-4 h-4 rounded border-border bg-zinc-900 text-primary focus:ring-primary"
+            className="w-4 h-4 rounded border-line bg-canvas accent-[#bdff45]"
           />
-          <span className="text-sm text-muted">Show resolved</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-muted">
+            Show resolved
+          </span>
         </label>
       </div>
 
@@ -158,10 +163,10 @@ export default function MarketGrid() {
           <button
             key={category}
             onClick={() => setActiveCategory(category)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-smooth ${
+            className={`px-4 py-2 rounded-full font-mono text-[10px] font-semibold uppercase tracking-[0.06em] transition-all ${
               activeCategory === category
-                ? 'bg-primary text-white'
-                : 'bg-card border border-border text-muted hover:text-white hover:border-primary/50'
+                ? 'bg-lime text-[#171815] shadow-[0_0_16px_rgba(189,255,69,0.25)]'
+                : 'bg-paper border border-line text-muted hover:text-ink hover:border-line-strong'
             }`}
           >
             {category}
@@ -180,7 +185,9 @@ export default function MarketGrid() {
       {filteredMarkets.length === 0 && (
         <div className="text-center py-16">
           <div className="text-4xl mb-4">🔍</div>
-          <p className="text-muted">No markets found for this filter.</p>
+          <p className="font-mono text-xs uppercase tracking-[0.08em] text-muted">
+            No markets found for this filter.
+          </p>
         </div>
       )}
     </section>

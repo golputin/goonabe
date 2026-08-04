@@ -1,11 +1,16 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Space_Grotesk, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { WalletProvider } from '@/components/WalletProvider';
 
-const inter = Inter({
+const grotesk = Space_Grotesk({
   subsets: ['latin'],
-  variable: '--font-sans',
+  variable: '--font-display',
+});
+
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
 });
 
 export const metadata: Metadata = {
@@ -40,7 +45,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${grotesk.variable} ${mono.variable}`}>
       <body>
         <WalletProvider>{children}</WalletProvider>
       </body>

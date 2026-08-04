@@ -6,63 +6,67 @@ const LEADERS = [
   { rank: 5, address: '0x7q8r...9s0t', pnl: '+$4,890', winRate: '63%', trades: 87 },
 ];
 
-const RANK_COLORS: Record<number, string> = {
-  1: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
-  2: 'bg-zinc-400/10 text-zinc-300 border-zinc-400/20',
-  3: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
+const RANK_STYLE: Record<number, string> = {
+  1: 'bg-lime/10 text-lime border-lime/30',
+  2: 'bg-lavender/10 text-lavender-light border-lavender/30',
+  3: 'bg-orange/10 text-orange border-orange/30',
 };
 
 export default function Leaderboard() {
   return (
     <section id="leaderboard" className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
-      <div className="bg-card border border-border rounded-2xl overflow-hidden">
-        {/* Header */}
-        <div className="px-6 py-5 border-b border-border bg-gradient-to-r from-primary/5 to-purple-500/5">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-xl font-bold text-white">Leaderboard</h2>
-              <p className="text-sm text-muted mt-1">Top traders this week</p>
-            </div>
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20">
-              <span className="w-2 h-2 rounded-full bg-success pulse-dot" />
-              <span className="text-xs text-primary-light">Live</span>
-            </div>
+      <div className="rounded-card border border-line bg-paper overflow-hidden">
+        {/* Titlebar */}
+        <div className="titlebar">
+          <div className="flex items-center gap-3">
+            <span className="kicker kicker--lavender">LEADERBOARD // TOP TRADERS THIS WEEK</span>
           </div>
+          <span className="badge badge--lime">
+            <span className="w-1 h-1 rounded-full bg-lime pulse-dot" />
+            LIVE
+          </span>
         </div>
 
         {/* Table */}
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-border">
-                <th className="px-6 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider">Rank</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-muted uppercase tracking-wider">Trader</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-muted uppercase tracking-wider">PnL</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-muted uppercase tracking-wider">Win Rate</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-muted uppercase tracking-wider">Trades</th>
+              <tr className="border-b border-line">
+                {['RANK', 'TRADER', 'PNL', 'WIN RATE', 'TRADES'].map((h, i) => (
+                  <th
+                    key={h}
+                    className={`px-6 py-3 font-mono text-[9px] font-semibold uppercase tracking-[0.09em] text-muted ${
+                      i >= 2 ? 'text-right' : 'text-left'
+                    }`}
+                  >
+                    {h}
+                  </th>
+                ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-line">
               {LEADERS.map((leader) => (
-                <tr key={leader.rank} className="hover:bg-zinc-900/50 transition-smooth">
+                <tr key={leader.rank} className="hover:bg-canvas/40 transition-colors">
                   <td className="px-6 py-4">
-                    <span className={`inline-flex items-center justify-center w-8 h-8 rounded-lg text-sm font-bold border ${
-                      RANK_COLORS[leader.rank] || 'bg-zinc-800 text-zinc-400 border-zinc-700'
-                    }`}>
+                    <span
+                      className={`inline-flex items-center justify-center w-8 h-8 rounded-xl font-mono text-sm font-bold border ${
+                        RANK_STYLE[leader.rank] || 'bg-canvas text-muted border-line'
+                      }`}
+                    >
                       {leader.rank}
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <span className="text-sm text-white font-mono">{leader.address}</span>
+                    <span className="text-sm text-ink font-mono">{leader.address}</span>
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <span className="text-sm font-semibold text-success">{leader.pnl}</span>
+                    <span className="text-sm font-mono font-bold text-lime">{leader.pnl}</span>
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <span className="text-sm text-white">{leader.winRate}</span>
+                    <span className="text-sm font-mono text-ink">{leader.winRate}</span>
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <span className="text-sm text-muted">{leader.trades}</span>
+                    <span className="text-sm font-mono text-muted">{leader.trades}</span>
                   </td>
                 </tr>
               ))}
@@ -70,11 +74,11 @@ export default function Leaderboard() {
           </table>
         </div>
 
-        {/* Footer */}
-        <div className="px-6 py-4 border-t border-border bg-zinc-900/30">
-          <p className="text-xs text-muted text-center">
-            Rankings update every 5 minutes · Based on realized PnL
-          </p>
+        {/* Footnote */}
+        <div className="px-6 pb-5">
+          <div className="footnote !mt-0">
+            RANKINGS UPDATE EVERY 5 MINUTES&nbsp;&nbsp;·&nbsp;&nbsp;BASED ON REALIZED PNL
+          </div>
         </div>
       </div>
     </section>
