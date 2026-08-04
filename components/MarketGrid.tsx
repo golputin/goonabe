@@ -184,7 +184,12 @@ export default function MarketGrid() {
       {/* Empty state */}
       {filteredMarkets.length === 0 && (
         <div className="text-center py-16">
-          <div className="text-4xl mb-4">🔍</div>
+          <div className="w-12 h-12 mx-auto mb-4 rounded-xl border border-line bg-paper grid place-items-center text-muted">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+          </div>
           <p className="font-mono text-xs uppercase tracking-[0.08em] text-muted">
             No markets found for this filter.
           </p>

@@ -1,27 +1,61 @@
+const ICONS = {
+  launch: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+      <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+      <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+    </svg>
+  ),
+  target: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+      <circle cx="12" cy="12" r="10" />
+      <circle cx="12" cy="12" r="6" />
+      <circle cx="12" cy="12" r="2" />
+    </svg>
+  ),
+  bolt: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+      <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
+    </svg>
+  ),
+  payout: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+      <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
+      <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
+      <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
+    </svg>
+  ),
+};
+
 const STEPS = [
   {
     step: '01',
     title: 'Token Launches',
     description: 'When a token launches on Robinhood Chain, prediction markets are automatically created for it.',
-    icon: '🚀',
+    icon: ICONS.launch,
+    accent: 'text-lime border-lime/30 bg-lime/8',
   },
   {
     step: '02',
     title: 'Place Your Bet',
     description: 'Buy YES or NO shares on outcomes like graduation, market cap targets, or dev behavior.',
-    icon: '🎯',
+    icon: ICONS.target,
+    accent: 'text-lavender-light border-lavender/30 bg-lavender/8',
   },
   {
     step: '03',
     title: 'Outcome Resolves',
     description: 'Markets resolve automatically based on on-chain data. No manual intervention needed.',
-    icon: '⚡',
+    icon: ICONS.bolt,
+    accent: 'text-orange border-orange/30 bg-orange/8',
   },
   {
     step: '04',
     title: 'Get Paid',
     description: 'Winners split the losing pool. Instant payouts directly to your wallet.',
-    icon: '💰',
+    icon: ICONS.payout,
+    accent: 'text-lime border-lime/30 bg-lime/8',
   },
 ];
 
@@ -81,7 +115,9 @@ export default function HowItWorks() {
               key={step.step}
               className="card-hover rounded-panel border border-line bg-paper p-6"
             >
-              <div className="text-3xl mb-4">{step.icon}</div>
+              <div className={`w-12 h-12 rounded-xl border grid place-items-center mb-5 ${step.accent}`}>
+                {step.icon}
+              </div>
               <div className="font-mono text-[10px] font-bold tracking-[0.1em] text-lime mb-2">
                 STEP // {step.step}
               </div>

@@ -18,38 +18,78 @@ const NAV = [
   { id: 'faq', label: 'FAQ' },
 ];
 
+const DOC_ICONS = {
+  graduation: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+      <path d="M22 10 12 5 2 10l10 5 10-5z" />
+      <path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5" />
+      <path d="M22 10v6" />
+    </svg>
+  ),
+  chart: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+      <path d="M3 3v18h18" />
+      <path d="m7 14 4-4 3 3 5-6" />
+    </svg>
+  ),
+  eye: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  ),
+  clock: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 6v6l4 2" />
+    </svg>
+  ),
+  alert: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+      <path d="m10.29 3.86-8.2 14.14A2 2 0 0 0 3.82 21h16.36a2 2 0 0 0 1.73-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+      <path d="M12 9v4" />
+      <path d="M12 17h.01" />
+    </svg>
+  ),
+};
+
 const MARKET_TYPES = [
   {
     type: 'Graduation',
-    icon: '🎓',
+    icon: DOC_ICONS.graduation,
+    accent: 'text-lime border-lime/30 bg-lime/8',
     question: 'Will the token graduate from the bonding curve?',
     resolution: 'On-chain: bonding curve completion',
     color: 'text-lime',
   },
   {
     type: 'Market Cap',
-    icon: '📊',
+    icon: DOC_ICONS.chart,
+    accent: 'text-lavender-light border-lavender/30 bg-lavender/8',
     question: 'Will the token hit a specific market cap by the deadline?',
     resolution: 'Oracle: price feed at deadline',
     color: 'text-lavender-light',
   },
   {
     type: 'Dev Behavior',
-    icon: '🕵️',
+    icon: DOC_ICONS.eye,
+    accent: 'text-danger border-danger/30 bg-danger/8',
     question: 'Will the dev sell more than X% of supply within a timeframe?',
     resolution: 'On-chain: wallet transaction tracking',
     color: 'text-danger',
   },
   {
     type: 'Longevity',
-    icon: '⏳',
+    icon: DOC_ICONS.clock,
+    accent: 'text-lavender-light border-lavender/30 bg-lavender/8',
     question: 'Will the token survive X days with active volume?',
     resolution: 'On-chain: volume check at deadline',
     color: 'text-lavender-light',
   },
   {
     type: 'Rug Risk',
-    icon: '🧨',
+    icon: DOC_ICONS.alert,
+    accent: 'text-orange border-orange/30 bg-orange/8',
     question: 'Will the token rug (liquidity removed) within a timeframe?',
     resolution: 'On-chain: liquidity pool monitoring',
     color: 'text-orange',
@@ -222,7 +262,9 @@ export default function DocsPage() {
                   <div className="divide-y divide-line">
                     {MARKET_TYPES.map((m) => (
                       <div key={m.type} className="p-5 sm:p-6 grid sm:grid-cols-[auto_1fr] gap-4">
-                        <div className="text-2xl">{m.icon}</div>
+                        <div className={`w-12 h-12 rounded-xl border grid place-items-center flex-none ${m.accent}`}>
+                          {m.icon}
+                        </div>
                         <div>
                           <div className={`font-display font-semibold text-lg ${m.color}`}>{m.type}</div>
                           <p className="text-sm text-ink-soft mt-1 mb-2">{m.question}</p>
