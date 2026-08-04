@@ -17,9 +17,11 @@ interface WalletContextType {
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
-// Robinhood Chain ID - update with actual chain ID
-const ROBINHOOD_CHAIN_ID = '0x1'; // Placeholder - update with real chain ID
+// Robinhood Chain mainnet (L2) — chain ID 4663
+const ROBINHOOD_CHAIN_ID = '0x1237';
 const ROBINHOOD_CHAIN_NAME = 'Robinhood Chain';
+const ROBINHOOD_RPC_URL = 'https://rpc.mainnet.chain.robinhood.com';
+const ROBINHOOD_EXPLORER_URL = 'https://explorer.mainnet.chain.robinhood.com';
 
 declare global {
   interface Window {
@@ -119,9 +121,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         // Fetch balance
         await fetchBalance(accounts[0]);
 
-        // Try to switch to Robinhood Chain if not on it
-        // Uncomment and update when chain ID is known
-        /*
+        // Switch to Robinhood Chain if not on it
         if (currentChainId !== ROBINHOOD_CHAIN_ID) {
           try {
             await window.ethereum.request({
@@ -137,14 +137,15 @@ export function WalletProvider({ children }: { children: ReactNode }) {
                   chainId: ROBINHOOD_CHAIN_ID,
                   chainName: ROBINHOOD_CHAIN_NAME,
                   nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
-                  rpcUrls: ['https://rpc.robinhoodchain.com'],
-                  blockExplorerUrls: ['https://explorer.robinhoodchain.com'],
+                  rpcUrls: [ROBINHOOD_RPC_URL],
+                  blockExplorerUrls: [ROBINHOOD_EXPLORER_URL],
                 }],
               });
             }
           }
+          setChainId(ROBINHOOD_CHAIN_ID);
+          await fetchBalance(accounts[0]);
         }
-        */
       }
     } catch (error: unknown) {
       const err = error as { code?: number; message?: string };
