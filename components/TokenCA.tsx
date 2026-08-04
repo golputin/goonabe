@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { PRE_LAUNCH, TOKEN_CA, TOKEN_TICKER } from '@/lib/config';
+import { TOKEN_CA, TOKEN_TICKER } from '@/lib/config';
 
 export default function TokenCA() {
   const [copied, setCopied] = useState(false);
@@ -22,7 +22,7 @@ export default function TokenCA() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const isLocked = PRE_LAUNCH || !TOKEN_CA;
+  const isLocked = !TOKEN_CA;
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 pt-4">
@@ -58,7 +58,7 @@ export default function TokenCA() {
                       <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                     </svg>
                     <span className="font-mono text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.1em] text-lavender-light whitespace-nowrap">
-                      CA drops at token launch
+                      CA will appear here
                     </span>
                   </div>
                 </div>
