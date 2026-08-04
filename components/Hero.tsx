@@ -12,7 +12,7 @@ const STATS = PRE_LAUNCH
   ? [
       { label: 'Launch Status', value: 'SOON', change: 'PRE-LAUNCH' },
       { label: 'Network', value: 'RH-4663', change: 'READY' },
-      { label: 'Market Types', value: '5', change: 'PER TOKEN' },
+      { label: 'Markets Per Token', value: '5', change: 'AUTO-CREATED' },
       { label: 'Win Fee', value: '2%', change: 'ON-CHAIN' },
     ]
   : [
