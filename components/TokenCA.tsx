@@ -22,7 +22,9 @@ export default function TokenCA() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const isLocked = !TOKEN_CA;
+  // Only show the CA panel as live when a full valid address is set
+  const isValidCA = /^0x[a-fA-F0-9]{40}$/.test(TOKEN_CA);
+  const isLocked = !isValidCA;
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 pt-4">
