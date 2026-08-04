@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useWallet } from './WalletProvider';
+import { PRE_LAUNCH } from '@/lib/config';
 
 export interface Market {
   id: number;
@@ -107,6 +108,11 @@ export default function MarketCard({ market }: { market: Market }) {
             <span className={`badge ${market.result === 'YES' ? 'badge--lime' : 'badge--danger'}`}>
               {market.result}
             </span>
+          ) : PRE_LAUNCH ? (
+            <span className="badge badge--lavender">
+              <span className="w-1 h-1 rounded-full bg-lavender pulse-dot" />
+              SOON
+            </span>
           ) : (
             <span className="badge badge--lime">
               <span className="w-1 h-1 rounded-full bg-lime pulse-dot" />
@@ -119,6 +125,10 @@ export default function MarketCard({ market }: { market: Market }) {
         <h3 className="font-display font-semibold text-ink text-[15px] leading-snug mb-4 min-h-[42px]">
           {market.question}
         </h3>
+
+        {/* Trading zone — blurred & locked during pre-launch */}
+        <div className="relative">
+        <div className={PRE_LAUNCH && !isResolved ? 'blur-[5px] opacity-50 pointer-events-none select-none' : undefined}>
 
         {/* Probability bar */}
         <div className="mb-4">
@@ -251,6 +261,24 @@ export default function MarketCard({ market }: { market: Market }) {
             Resolved: {market.result}
           </div>
         )}
+
+        </div>
+
+        {/* Pre-launch overlay */}
+        {PRE_LAUNCH && !isResolved && (
+          <div className="absolute inset-0 grid place-items-center">
+            <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl border border-lavender/40 bg-canvas/85 backdrop-blur-sm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 text-lavender-light flex-none">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+              <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.1em] text-lavender-light whitespace-nowrap">
+                Betting opens after token launch
+              </span>
+            </div>
+          </div>
+        )}
+        </div>
       </div>
     </div>
   );

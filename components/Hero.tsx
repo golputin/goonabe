@@ -1,3 +1,5 @@
+import { PRE_LAUNCH } from '@/lib/config';
+
 const FEED = [
   { addr: '0x7f3a…9c21', side: 'YES', market: '$PONS GRADUATION', amt: '0.85 ETH', t: '12s' },
   { addr: '0x2b88…4e07', side: 'NO', market: '$LAMBO RUG 24H', amt: '0.30 ETH', t: '47s' },
@@ -6,12 +8,19 @@ const FEED = [
   { addr: '0x5e41…a8b9', side: 'NO', market: '$ROBIN DEV SELL', amt: '0.62 ETH', t: '3m' },
 ];
 
-const STATS = [
-  { label: 'Total Volume', value: '$2.4M', change: '+18%' },
-  { label: 'Markets Created', value: '156', change: '+12' },
-  { label: 'Active Traders', value: '3,847', change: '+234' },
-  { label: 'Resolved', value: '142', change: '98%' },
-];
+const STATS = PRE_LAUNCH
+  ? [
+      { label: 'Launch Status', value: 'SOON', change: 'PRE-LAUNCH' },
+      { label: 'Network', value: 'RH-4663', change: 'READY' },
+      { label: 'Market Types', value: '5', change: 'PER TOKEN' },
+      { label: 'Win Fee', value: '2%', change: 'ON-CHAIN' },
+    ]
+  : [
+      { label: 'Total Volume', value: '$2.4M', change: '+18%' },
+      { label: 'Markets Created', value: '156', change: '+12' },
+      { label: 'Active Traders', value: '3,847', change: '+234' },
+      { label: 'Resolved', value: '142', change: '98%' },
+    ];
 
 export default function Hero() {
   return (
@@ -30,8 +39,10 @@ export default function Hero() {
           {/* Left: headline panel */}
           <article className="animate-slide-up">
             <div className="kicker kicker--lime mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-lime pulse-dot" />
-              KLANKO STATUS: LIVE&nbsp;&nbsp;//&nbsp;&nbsp;NET: ROBINHOOD CHAIN 4663
+              <span className={`w-1.5 h-1.5 rounded-full pulse-dot ${PRE_LAUNCH ? 'bg-lavender' : 'bg-lime'}`} />
+              {PRE_LAUNCH
+                ? <>KLANKO STATUS: PRE-LAUNCH&nbsp;&nbsp;//&nbsp;&nbsp;NET: ROBINHOOD CHAIN 4663</>
+                : <>KLANKO STATUS: LIVE&nbsp;&nbsp;//&nbsp;&nbsp;NET: ROBINHOOD CHAIN 4663</>}
             </div>
 
             <h1 className="font-display font-bold text-6xl sm:text-7xl lg:text-8xl tracking-tight text-ink leading-[0.95]">
@@ -64,33 +75,57 @@ export default function Hero() {
           {/* Right: live feed panel */}
           <article className="rounded-panel border border-line bg-paper/80 backdrop-blur-sm overflow-hidden animate-slide-up">
             <div className="titlebar">
-              <span className="kicker kicker--lavender">LIVE FEED // OPEN BETS</span>
-              <span className="badge badge--lime">
-                <span className="w-1 h-1 rounded-full bg-lime pulse-dot" />
-                LIVE
+              <span className="kicker kicker--lavender">
+                {PRE_LAUNCH ? 'PREVIEW // SAMPLE BETS' : 'LIVE FEED // OPEN BETS'}
               </span>
+              {PRE_LAUNCH ? (
+                <span className="badge badge--lavender">
+                  <span className="w-1 h-1 rounded-full bg-lavender pulse-dot" />
+                  SOON
+                </span>
+              ) : (
+                <span className="badge badge--lime">
+                  <span className="w-1 h-1 rounded-full bg-lime pulse-dot" />
+                  LIVE
+                </span>
+              )}
             </div>
 
-            <div className="divide-y divide-line">
-              {FEED.map((f, i) => (
-                <div key={i} className="flex items-center justify-between gap-3 px-4 py-3">
-                  <div className="min-w-0">
-                    <div className="font-mono text-[11px] text-ink-soft truncate">
-                      {f.addr}&nbsp;
-                      <span className={f.side === 'YES' ? 'text-lime font-bold' : 'text-danger font-bold'}>
-                        BUY {f.side}
-                      </span>
+            <div className="relative">
+              <div className={`divide-y divide-line ${PRE_LAUNCH ? 'blur-[5px] opacity-50 select-none' : ''}`}>
+                {FEED.map((f, i) => (
+                  <div key={i} className="flex items-center justify-between gap-3 px-4 py-3">
+                    <div className="min-w-0">
+                      <div className="font-mono text-[11px] text-ink-soft truncate">
+                        {f.addr}&nbsp;
+                        <span className={f.side === 'YES' ? 'text-lime font-bold' : 'text-danger font-bold'}>
+                          BUY {f.side}
+                        </span>
+                      </div>
+                      <div className="font-mono text-[9px] uppercase tracking-[0.06em] text-muted mt-1 truncate">
+                        {f.market}
+                      </div>
                     </div>
-                    <div className="font-mono text-[9px] uppercase tracking-[0.06em] text-muted mt-1 truncate">
-                      {f.market}
+                    <div className="text-right flex-none">
+                      <div className="font-mono text-[11px] text-ink">{f.amt}</div>
+                      <div className="font-mono text-[9px] text-muted mt-1">{f.t} ago</div>
                     </div>
                   </div>
-                  <div className="text-right flex-none">
-                    <div className="font-mono text-[11px] text-ink">{f.amt}</div>
-                    <div className="font-mono text-[9px] text-muted mt-1">{f.t} ago</div>
+                ))}
+              </div>
+              {PRE_LAUNCH && (
+                <div className="absolute inset-0 grid place-items-center">
+                  <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl border border-lavender/40 bg-canvas/85 backdrop-blur-sm">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 text-lavender-light flex-none">
+                      <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                    <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.1em] text-lavender-light whitespace-nowrap">
+                      Feed goes live at launch
+                    </span>
                   </div>
                 </div>
-              ))}
+              )}
             </div>
 
             <div className="footnote">

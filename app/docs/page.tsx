@@ -419,7 +419,7 @@ export default function DocsPage() {
 
               {/* CTA */}
               <div className="rounded-card border border-lime/25 bg-lime/5 p-8 text-center">
-                <div className="kicker kicker--lime justify-center mb-3">READY // MARKETS ARE LIVE</div>
+                <div className="kicker kicker--lime justify-center mb-3">READY // MARKETS OPEN AT TOKEN LAUNCH</div>
                 <a href="/#markets" className="btn btn--lime">
                   Browse Markets
                 </a>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import MarketCard, { Market } from './MarketCard';
+import { PRE_LAUNCH } from '@/lib/config';
 
 // Real Robinhood Chain tokens for testing
 const MARKETS: Market[] = [
@@ -136,10 +137,12 @@ export default function MarketGrid() {
         <div>
           <div className="kicker kicker--lime mb-3">MARKETS // AUTO-CREATED FOR EVERY LAUNCH</div>
           <h2 className="font-display font-bold text-3xl text-ink tracking-tight">
-            Open Markets
+            {PRE_LAUNCH ? 'Launch Markets' : 'Open Markets'}
           </h2>
           <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-muted mt-2">
-            {filteredMarkets.length} markets live
+            {PRE_LAUNCH
+              ? `${filteredMarkets.length} markets ready · betting opens after token launch`
+              : `${filteredMarkets.length} markets live`}
           </p>
         </div>
 
@@ -156,6 +159,19 @@ export default function MarketGrid() {
           </span>
         </label>
       </div>
+
+      {/* Pre-launch banner */}
+      {PRE_LAUNCH && (
+        <div className="mb-8 flex items-center gap-3 px-5 py-4 rounded-panel border border-lavender/30 bg-lavender/5">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-lavender-light flex-none">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          <p className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.08em] text-lavender-light">
+            PRE-LAUNCH // Markets are previewed below — betting unlocks once the token goes live
+          </p>
+        </div>
+      )}
 
       {/* Category filters */}
       <div className="flex flex-wrap gap-2 mb-8">
