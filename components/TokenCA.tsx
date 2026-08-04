@@ -7,12 +7,12 @@ export default function TokenCA() {
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
-    if (!TOKEN_CA) return;
+    if (!ca) return;
     try {
-      await navigator.clipboard.writeText(TOKEN_CA);
+      await navigator.clipboard.writeText(ca);
     } catch {
       const el = document.createElement('textarea');
-      el.value = TOKEN_CA;
+      el.value = ca;
       document.body.appendChild(el);
       el.select();
       document.execCommand('copy');
@@ -22,8 +22,10 @@ export default function TokenCA() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Only show the CA panel as live when a full valid address is set
-  const isValidCA = /^0x[a-fA-F0-9]{40}$/.test(TOKEN_CA);
+  // Paste the CA in lib/config.ts (TOKEN_CA) — nothing else needs changing.
+  // Whitespace is stripped automatically; panel goes live once the address is valid.
+  const ca = TOKEN_CA.trim();
+  const isValidCA = /^0x[a-fA-F0-9]{40}$/.test(ca);
   const isLocked = !isValidCA;
 
   return (
@@ -74,7 +76,7 @@ export default function TokenCA() {
               {/* Live CA display */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 rounded-panel border border-line bg-canvas/50 px-5 py-4">
                 <div className="flex-1 min-w-0 font-mono text-sm sm:text-base text-ink break-all">
-                  {TOKEN_CA}
+                  {ca}
                 </div>
                 <button
                   onClick={copy}
