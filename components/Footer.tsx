@@ -21,9 +21,9 @@ export default function Footer() {
           <div>
             <h4 className="kicker kicker--lavender mb-4">PLATFORM</h4>
             <ul className="space-y-2.5">
-              <li><a href="#markets" className="text-sm text-muted hover:text-ink transition-colors">Markets</a></li>
-              <li><a href="#leaderboard" className="text-sm text-muted hover:text-ink transition-colors">Leaderboard</a></li>
-              <li><a href="#how" className="text-sm text-muted hover:text-ink transition-colors">How It Works</a></li>
+              <li><a href="/#markets" className="text-sm text-muted hover:text-ink transition-colors">Markets</a></li>
+              <li><a href="/#leaderboard" className="text-sm text-muted hover:text-ink transition-colors">Leaderboard</a></li>
+              <li><a href="/#how" className="text-sm text-muted hover:text-ink transition-colors">How It Works</a></li>
             </ul>
           </div>
 
