@@ -81,9 +81,18 @@ export default function MarketCard({ market }: { market: Market }) {
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-2">
           {/* Token avatar */}
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/30 to-purple-500/30 flex items-center justify-center text-xs font-bold text-white">
-            {market.token.slice(0, 2)}
-          </div>
+          {market.image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={market.image}
+              alt={`$${market.token} logo`}
+              className="w-8 h-8 rounded-full object-cover"
+            />
+          ) : (
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/30 to-purple-500/30 flex items-center justify-center text-xs font-bold text-white">
+              {market.token.slice(0, 2)}
+            </div>
+          )}
           <div>
             <div className="text-sm font-medium text-white">${market.token}</div>
             <span className={`inline-block px-2 py-0.5 rounded text-[10px] border ${CATEGORY_COLORS[market.category] || 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20'}`}>

@@ -8,6 +8,7 @@ const MARKETS: Market[] = [
   {
     id: 1,
     token: 'PONS',
+    image: '/logos/PONS.svg',
     question: 'Will $PONS graduate from the bonding curve?',
     category: 'Graduation',
     yesPercent: 68,
@@ -19,6 +20,7 @@ const MARKETS: Market[] = [
   {
     id: 2,
     token: 'HOOD',
+    image: '/logos/HOOD.svg',
     question: 'Will $HOOD reach 0.01 ETH market cap within 24h?',
     category: 'Market Cap',
     yesPercent: 45,
@@ -30,6 +32,7 @@ const MARKETS: Market[] = [
   {
     id: 3,
     token: 'ROBIN',
+    image: '/logos/ROBIN.svg',
     question: 'Will the $ROBIN dev sell more than 5% of supply?',
     category: 'Dev Behavior',
     yesPercent: 23,
@@ -41,6 +44,7 @@ const MARKETS: Market[] = [
   {
     id: 4,
     token: 'STONK',
+    image: '/logos/STONK.svg',
     question: 'Will $STONK still have volume after 7 days?',
     category: 'Longevity',
     yesPercent: 52,
@@ -52,6 +56,7 @@ const MARKETS: Market[] = [
   {
     id: 5,
     token: 'MOON',
+    image: '/logos/MOON.svg',
     question: 'Will $MOON rug within 48h of launch?',
     category: 'Rug Risk',
     yesPercent: 18,
@@ -63,6 +68,7 @@ const MARKETS: Market[] = [
   {
     id: 6,
     token: 'DIAMOND',
+    image: '/logos/DIAMOND.svg',
     question: 'Will $DIAMOND graduate from bonding curve?',
     category: 'Graduation',
     yesPercent: 74,
@@ -74,6 +80,7 @@ const MARKETS: Market[] = [
   {
     id: 7,
     token: 'HODL',
+    image: '/logos/HODL.svg',
     question: 'Will $HODL hit 0.05 ETH market cap?',
     category: 'Market Cap',
     yesPercent: 38,
@@ -85,6 +92,7 @@ const MARKETS: Market[] = [
   {
     id: 8,
     token: 'LAMBO',
+    image: '/logos/LAMBO.svg',
     question: 'Will $LAMBO rug within 24h?',
     category: 'Rug Risk',
     yesPercent: 82,
@@ -97,6 +105,7 @@ const MARKETS: Market[] = [
   {
     id: 9,
     token: 'GEM',
+    image: '/logos/GEM.svg',
     question: 'Will $GEM survive 30 days?',
     category: 'Longevity',
     yesPercent: 29,
