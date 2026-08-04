@@ -37,11 +37,8 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://github.com/golputin/goonabe" target="_blank" rel="noopener noreferrer" className="text-sm text-muted hover:text-ink transition-colors">
-                  GitHub
-                </a>
+                <a href="/docs" className="text-sm text-muted hover:text-ink transition-colors">Docs</a>
               </li>
-              <li><a href="#" className="text-sm text-muted hover:text-ink transition-colors">Docs</a></li>
             </ul>
           </div>
         </div>

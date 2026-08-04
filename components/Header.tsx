@@ -25,18 +25,20 @@ export default function Header() {
             {/* Desktop nav */}
             <nav className="hidden md:flex items-center gap-6">
               {[
-                { label: 'Markets', href: '#markets' },
-                { label: 'Leaderboard', href: '#leaderboard' },
-                { label: 'How it works', href: '#how' },
-              ].map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-muted hover:text-ink transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
+                {[
+                  { label: 'Markets', href: '/#markets' },
+                  { label: 'Leaderboard', href: '/#leaderboard' },
+                  { label: 'How it works', href: '/#how' },
+                  { label: 'Docs', href: '/docs' },
+                ].map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-muted hover:text-ink transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                ))}
             </nav>
           </div>
 
@@ -89,6 +91,7 @@ export default function Header() {
                 { label: 'Markets', href: '#markets' },
                 { label: 'Leaderboard', href: '#leaderboard' },
                 { label: 'How it works', href: '#how' },
+                { label: 'Docs', href: '/docs' },
               ].map((link) => (
                 <a
                   key={link.href}
