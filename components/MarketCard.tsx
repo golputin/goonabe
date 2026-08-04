@@ -92,7 +92,7 @@ export default function MarketCard({ market }: { market: Market }) {
             />
           </>
         )}
-        <span className="card-art-ticker">${market.token}</span>
+        <span className={`card-art-ticker ${PRE_LAUNCH ? 'blur-[5px] opacity-50 select-none' : ''}`}>${market.token}</span>
       </div>
 
       {/* Body */}
@@ -100,7 +100,7 @@ export default function MarketCard({ market }: { market: Market }) {
         {/* Badges + status */}
         <div className="flex items-center justify-between gap-2 mb-3">
           <div className="flex items-center gap-2">
-            <span className={`badge ${CATEGORY_BADGE[market.category] || 'badge--lavender'}`}>
+            <span className={`badge ${CATEGORY_BADGE[market.category] || 'badge--lavender'} ${PRE_LAUNCH ? 'blur-[4px] opacity-60 select-none' : ''}`}>
               {market.category}
             </span>
           </div>
@@ -122,7 +122,7 @@ export default function MarketCard({ market }: { market: Market }) {
         </div>
 
         {/* Question */}
-        <h3 className="font-display font-semibold text-ink text-[15px] leading-snug mb-4 min-h-[42px]">
+        <h3 className={`font-display font-semibold text-ink text-[15px] leading-snug mb-4 min-h-[42px] ${PRE_LAUNCH ? 'blur-[5px] opacity-50 select-none' : ''}`}>
           {market.question}
         </h3>
 
