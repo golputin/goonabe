@@ -48,9 +48,6 @@ export default function Footer() {
           <div className="font-mono text-[9px] uppercase tracking-[0.09em] text-muted">
             © {new Date().getFullYear()} KLANKO&nbsp;&nbsp;·&nbsp;&nbsp;ROBINHOOD CHAIN
           </div>
-          <div className="font-mono text-[9px] uppercase tracking-[0.09em] text-muted">
-            NOT FINANCIAL ADVICE&nbsp;&nbsp;·&nbsp;&nbsp;TRADE RESPONSIBLY
-          </div>
         </div>
       </div>
     </footer>

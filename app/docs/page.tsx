@@ -77,10 +77,6 @@ const FAQ = [
     q: 'Can I sell my position early?',
     a: 'YES/NO shares can be traded against the market pool until the market resolves, letting you exit early or hedge.',
   },
-  {
-    q: 'Is this financial advice?',
-    a: 'No. KLANKO is a prediction market for entertainment and price discovery. Bet only what you can afford to lose.',
-  },
 ];
 
 export default function DocsPage() {
