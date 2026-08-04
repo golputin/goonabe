@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     title: 'KLANKO — Prediction Markets',
     description:
       'Bet on token launch outcomes. On-chain resolution, instant payouts.',
-    site: '@klankofun',
+    site: '@KlankoFunRH',
   },
   robots: {
     index: true,

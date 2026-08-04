@@ -32,7 +32,7 @@ export default function Footer() {
             <h4 className="kicker kicker--lavender mb-4">COMMUNITY</h4>
             <ul className="space-y-2.5">
               <li>
-                <a href="https://x.com/klankofun" target="_blank" rel="noopener noreferrer" className="text-sm text-muted hover:text-ink transition-colors">
+                <a href="https://x.com/KlankoFunRH" target="_blank" rel="noopener noreferrer" className="text-sm text-muted hover:text-ink transition-colors">
                   X / Twitter
                 </a>
               </li>
